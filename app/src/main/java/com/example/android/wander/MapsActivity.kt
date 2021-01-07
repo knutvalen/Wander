@@ -11,10 +11,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import java.util.*
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -46,13 +43,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val latitude = 60.35686653463655
         val longitude = 5.366504819794143
         val homeLatLng = LatLng(latitude, longitude)
-        val zoomLevel = 15f
+        val zoomLevel = 18f
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(homeLatLng, zoomLevel))
         map.addMarker(MarkerOptions().position(homeLatLng))
 
         setMapLongClick(map)
         setPoiClick(map)
         setMapStyle(map)
+
+        val overlaySize = 100f
+        val androidOverlay = GroundOverlayOptions()
+            .image(BitmapDescriptorFactory.fromResource(R.drawable.android))
+            .position(homeLatLng, overlaySize)
+
+        map.addGroundOverlay(androidOverlay)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
